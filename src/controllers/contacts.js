@@ -5,9 +5,19 @@ import {
   getContactById,
   updateContact,
 } from '../servises/contacts.js';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
 
 export const getContactsController = async (req, res) => {
-  const contacts = await getAllContacts();
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+
+  const contacts = await getAllContacts({
+    page: +page,
+    perPage: +perPage,
+    sortBy,
+    sortOrder,
+  });
 
   res.status(200).json({
     status: 200,
@@ -60,13 +70,13 @@ export const deleteContactByIdController = async (req, res) => {
   res.status(204).send();
 };
 
-
-
 export const putContactController = async (req, res) => {
   const { contactId } = req.params;
   const { body } = req;
 
-  const { contact, isNew } = await updateContact(contactId, body, { upsert: true });
+  const { contact, isNew } = await updateContact(contactId, body, {
+    upsert: true,
+  });
 
   const status = isNew ? 201 : 200;
 
