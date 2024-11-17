@@ -24,6 +24,7 @@ export const registerUser = async (payload) => {
 
 export const loginUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
+
   if (!user) {
     throw createHttpError(401, 'Email or password invalid');
   }

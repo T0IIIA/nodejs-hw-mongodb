@@ -20,8 +20,8 @@ authRouter.post(
   ctrlWrapper(authControllers.loginUserController),
 );
 
-authRouter.post('/:refresh');
+// authRouter.post('/:refresh');
 
-authRouter.post('/:logout');
+// authRouter.post('/:logout');
 
 export default authRouter;
