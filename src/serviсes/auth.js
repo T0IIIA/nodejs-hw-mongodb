@@ -42,7 +42,7 @@ export const loginUser = async (payload) => {
     userId: user._id,
     accessToken,
     refreshToken,
-    accessTokenValidUntil: Date.now() + accessTokenLifeTime,
-    refreshTokenLifeTime: Date.now() + refreshTokenLifeTime,
+    accessTokenValidUntil: new Date(Date.now() + accessTokenLifeTime),
+    refreshTokenLifeTime: new Date(Date.now() + refreshTokenLifeTime),
   });
 };

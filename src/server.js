@@ -5,6 +5,7 @@ import logger from './utils/logger.js';
 import { env } from './utils/env.js';
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
+import cookieParser from 'cookie-parser';
 
 export const setupServer = () => {
   const app = express();
@@ -15,8 +16,8 @@ export const setupServer = () => {
     }),
   );
   app.use(cors());
-
   // app.use(logger);
+  app.use(cookieParser());
 
   app.use(router);
 
