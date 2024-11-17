@@ -1,10 +1,4 @@
-import {
-  createContact,
-  deleteContactById,
-  getAllContacts,
-  getContactById,
-  updateContact,
-} from '../servises/contacts.js';
+import * as contactsServises from '../serviсes/contacts.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
@@ -14,7 +8,7 @@ export const getContactsController = async (req, res) => {
   const { sortBy, sortOrder } = parseSortParams(req.query);
   const filter = parseFilterParams(req.query);
 
-  const contacts = await getAllContacts({
+  const contacts = await contactsServises.getAllContacts({
     page: +page,
     perPage: +perPage,
     sortBy,
@@ -31,7 +25,7 @@ export const getContactsController = async (req, res) => {
 
 export const getContactsByIdController = async (req, res) => {
   const { contactId } = req.params;
-  const contact = await getContactById(contactId);
+  const contact = await contactsServises.getContactById(contactId);
 
   res.status(200).json({
     status: 200,
@@ -41,7 +35,7 @@ export const getContactsByIdController = async (req, res) => {
 };
 
 export const createContactController = async (req, res) => {
-  const newContact = await createContact(req.body);
+  const newContact = await contactsServises.createContact(req.body);
 
   res.status(201).send({
     status: 201,
@@ -56,7 +50,7 @@ export const editContactController = async (req, res) => {
   const { contactId } = req.params;
   const { body } = req;
 
-  const contact = await updateContact(contactId, body);
+  const contact = await contactsServises.updateContact(contactId, body);
 
   res.status(200).send({
     status: 200,
@@ -68,7 +62,7 @@ export const editContactController = async (req, res) => {
 export const deleteContactByIdController = async (req, res) => {
   const { contactId } = req.params;
 
-  await deleteContactById(contactId);
+  await contactsServises.deleteContactById(contactId);
 
   res.status(204).send();
 };
@@ -77,9 +71,13 @@ export const putContactController = async (req, res) => {
   const { contactId } = req.params;
   const { body } = req;
 
-  const { contact, isNew } = await updateContact(contactId, body, {
-    upsert: true,
-  });
+  const { contact, isNew } = await contactsServises.updateContact(
+    contactId,
+    body,
+    {
+      upsert: true,
+    },
+  );
 
   const status = isNew ? 201 : 200;
 
