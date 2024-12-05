@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import { authenticate } from '../middlewares/authenticate.js';
+
 import contactsRouter from './contacts.js';
 import authRouter from './auth.js';
 
@@ -11,7 +13,9 @@ router.get('/', (req, res) => {
   });
 });
 
-router.use('/contacts', contactsRouter);
 router.use('/auth', authRouter);
+
+router.use(authenticate);
+router.use('/contacts', contactsRouter);
 
 export default router;

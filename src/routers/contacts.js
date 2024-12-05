@@ -6,6 +6,7 @@ import {
   createContactSchema,
   updateContactSchema,
 } from '../validation/contacts.js';
+
 import { isValidId } from '../middlewares/isValidId.js';
 
 const contactsRouter = Router();
@@ -13,6 +14,7 @@ const contactsRouter = Router();
 contactsRouter.use('/:contactId', isValidId('contactId'));
 
 contactsRouter.get('/', ctrlWrapper(contactsControllers.getContactsController));
+
 contactsRouter.get(
   '/:contactId',
   ctrlWrapper(contactsControllers.getContactsByIdController),

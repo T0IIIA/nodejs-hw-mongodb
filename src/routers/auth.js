@@ -9,19 +9,19 @@ import validateBody from '../middlewares/validateBody.js';
 const authRouter = Router();
 
 authRouter.post(
-  '/:register',
+  '/register',
   validateBody(registerUserSchema),
   ctrlWrapper(authControllers.registerUserController),
 );
 
 authRouter.post(
-  '/:login',
+  '/login',
   validateBody(loginUserSchema),
   ctrlWrapper(authControllers.loginUserController),
 );
 
-// authRouter.post('/:refresh');
+authRouter.post('/refresh', ctrlWrapper(authControllers.refreshUserController));
 
-// authRouter.post('/:logout');
+authRouter.post('/logout', ctrlWrapper(authControllers.logoutUserController));
 
 export default authRouter;
